@@ -85,12 +85,11 @@
     <GradleTemplate Include="gradle\wrapper\gradle-wrapper.properties.template" />
   </ItemGroup>
   <ItemGroup>
+    <JavaCompile Include="app\src\main\java\com\Android3\Core\InfoChannels.java" />
     <JavaCompile Include="app\src\main\java\com\Android3\Init.java" />
     <JavaCompile Include="app\src\main\java\com\Android3\Core\ServerMain.java" />
     <JavaCompile Include="app\src\main\java\com\Android3\InitService.java" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="app\src\main\java\com\Android3\Service\" />
+    <JavaCompile Include="app\src\main\java\com\Android3\Service\ISHandler.java" />
   </ItemGroup>
   <Import Project="$(AndroidTargetsPath)\Android.targets" />
   <ImportGroup Label="ExtensionTargets" />

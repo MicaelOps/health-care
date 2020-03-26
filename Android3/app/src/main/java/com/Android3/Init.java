@@ -1,32 +1,56 @@
 
 package com.Android3;
 
-import com.Android3.Core.ServerMain;
+import com.Android3.Service.ISHandler;
+import com.Android3.Core.InfoChannels;
+import android.content.Context;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.app.Activity;
 import android.widget.TextView;
 import android.widget.Button;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.os.Bundle;
 
 public class Init extends Activity
 {
+
+	private ISHandlerReceiver hreceiver;
+	
+
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
     	this.getActionBar().hide();
-	
-        super.onCreate(savedInstanceState);
+    	super.onCreate(savedInstanceState);
 
 		draw();
+		handlers();
+		//ServerMain main = new ServerMain();
+	
 		
-		ServerMain main = new ServerMain();
-		if(main.connect()) {
-			
-		}
-		
+		Intent intent = new Intent(this, ISHandler.class);
+		startService(intent);
     }
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		unregisterReceiver(hreceiver);
+	}
+
+
+	private void handlers() {
+
+		hreceiver = new ISHandlerReceiver();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(InfoChannels.GPS.getName());
+		registerReceiver(hreceiver, filter);
+	}
+	
 
     private void draw() { 
 
@@ -49,5 +73,13 @@ public class Init extends Activity
 		layout.addView(tv);	
 		layout.setBackgroundColor(Color.BLACK);
         setContentView(layout);
+    }
+
+    private class ISHandlerReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			//change
+		}
     }
 }
